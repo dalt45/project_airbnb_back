@@ -31,7 +31,7 @@ router.post('/signup', (req,res) => {
                     //userParams.ifValidEmail = validateEmail(userParams.email)
                     const user = new Users(userParams)
                     user.save().then((createdUser) => {
-                        const token = jwt.sign(createdUser.toJSON(), 'devfrules')
+                        var token = jwt.sign(createdUser.toJSON(), 'devfrules')
                         res.send({token:token});
                         // o {token}
                     })
@@ -87,8 +87,8 @@ router.post('/login',(req,res) => {
     }, (error,user)=> {
         if(error) return res.send(error);
         bcrypt.compare(userParams.password, user.password, (err,response) => {
-            if (response) return res.send("son iguales");
-            res.send("lo siento no entraste");
+            if (response) return res.send({message:"Bienvenido al Clon Airbnb"});
+            res.send("El email o la contraseña son incorrectos");
         })
     } )
 })
