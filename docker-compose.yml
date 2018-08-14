@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: "mongo"
+    #environment:
+     # - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+     #- ME_CONFIG_MONGODB_ADMINPASSWORD=password
+  backend:
+    image: 'my-nodejs-app'
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - SALT=10
+    command: node app.js
