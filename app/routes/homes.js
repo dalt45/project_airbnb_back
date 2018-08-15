@@ -17,6 +17,15 @@ router.post('/', (req,res) => {
     })
 })
 
+router.get('/search', (req,res) =>{
+    const params = req.query;
+    console.log(params);
+    Homes.find(params,(err,homes) => {
+        res.send({homes})
+    })
+})
+
+
 router.get('/:city', (req,res) =>{
     const city = req.params.city;
     Homes.find({
@@ -25,6 +34,7 @@ router.get('/:city', (req,res) =>{
         res.send({homes:homes})
     })
 })
+
 
 
 module.exports = router;
