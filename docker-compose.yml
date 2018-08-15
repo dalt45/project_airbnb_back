@@ -6,7 +6,7 @@ services:
      # - ME_CONFIG_MONGODB_ADMINUSERNAME=root
      #- ME_CONFIG_MONGODB_ADMINPASSWORD=password
   backend:
-    image: 'my-nodejs-app'
+    image: 'airbnbback'
     depends_on:
       - db
     ports:
