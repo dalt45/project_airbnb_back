@@ -13,7 +13,7 @@ router.post('/', (req,res) => {
     homeParams.user_id = req.user.id;
     const home = new Homes(homeParams);
     home.save().then((createdHome) => {
-        res.send({home: createdHome})
+        res.status(200).json({home: createdHome})
     })
 })
 

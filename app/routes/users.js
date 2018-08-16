@@ -23,7 +23,7 @@ router.post('/signup', (req,res) => {
             if (answer > 0 ){
                 console.log(answer)
                 console.log("Email Duplicate")
-                res.send("Email Duplicado")
+                res.status(406).json({error:"Email Duplicado"})
             }else{
                 bcrypt.hash(userParams.password,SALT,(err, hash) =>{
                     //userParams.ifValidPass = isOkPass(userParams.password)
@@ -32,7 +32,7 @@ router.post('/signup', (req,res) => {
                     const user = new Users(userParams)
                     user.save().then((createdUser) => {
                         const token = jwt.sign(createdUser.toJSON(), 'devfrules')
-                        res.send({token:token});
+                        res.status(200).json({token:token});
                         // o {token}
                     })
                     })
@@ -85,14 +85,14 @@ router.post('/login',(req,res) => {
     Users.findOne({
         email:userParams.email
     }, (error,user)=> {
-        if(error) return res.send(error);
+        if(error) return res.status(404).json({error});
         bcrypt.compare(userParams.password, user.password, (err,response) => {
             if (response) {
                 const token = jwt.sign(user.toJSON(), 'devfrules')
-                res.send({token});
+                res.status(200).json({token});
                 //userParams trae la contraseña en texto plano
             }else{            
-            res.send("El email o la contraseña son incorrectos");
+            res.status(400).json({error:"El email o la contraseña son incorrectos});
             }
         })
     } )

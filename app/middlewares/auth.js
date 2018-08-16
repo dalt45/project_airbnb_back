@@ -9,7 +9,7 @@ const auth = (req ,res ,next) => {
         email: decoded.email
     },(err,user) => {
         //hacer validación del error
-        if (err) return res.send("token erroneo")
+        if (err) return res.status(400).json({Error:"Token not valid"})
         req.user = user;
         return next();
     })
