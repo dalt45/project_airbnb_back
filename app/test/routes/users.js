@@ -75,4 +75,42 @@ describe('users signup' , () => {
             done();
         })
     })
+
+    it('should reject not valid email', (done) => {
+        request(app)
+        .post('/users/signup')
+        .send({
+            "user":{
+            "email":"email1ema.com",
+            "password":"Contra$ena.1"
+            }
+        })
+        .expect("Content-type", /json/)
+        .end((err,res) => {
+            res.should.be.json();
+            res.should.have.status(403);
+            console.log("body",res.body);
+            res.body.should.have.property('error');
+            done();
+        })
+    })
+
+    it('should reject not strong password', (done) => {
+        request(app)
+        .post('/users/signup')
+        .send({
+            "user":{
+            "email":"email@1sdema.com",
+            "password":"Chola"
+            }
+        })
+        .expect("Content-type", /json/)
+        .end((err,res) => {
+            res.should.be.json();
+            res.should.have.status(403);
+            console.log("body",res.body);
+            res.body.should.have.property('error');
+            done();
+        })
+    })
 })

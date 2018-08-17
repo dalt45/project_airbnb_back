@@ -26,15 +26,19 @@ router.post('/signup', (req,res) => {
                 res.status(406).json({error:"Email Duplicado"})
             }else{
                 bcrypt.hash(userParams.password,SALT,(err, hash) =>{
-                    //userParams.ifValidPass = isOkPass(userParams.password)
+                    userParams.ifValidPass = isOkPass(userParams.password)
                     userParams.password = hash;
-                    //userParams.ifValidEmail = validateEmail(userParams.email)
+                    userParams.ifValidEmail = validateEmail(userParams.email)
+                    if(userParams.ifValidPass.result && userParams.ifValidEmail){
                     const user = new Users(userParams)
                     user.save().then((createdUser) => {
                         const token = jwt.sign(createdUser.toJSON(), 'devfrules')
                         res.status(200).json({token:token});
                         // o {token}
                     })
+                    }else{
+                        res.status(403).json({error: "Invalid Password or email format not valid"});
+                    }
                     })
             }
         })
