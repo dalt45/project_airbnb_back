@@ -5,6 +5,7 @@ const cors = require("cors")
 const auth = require('./middlewares/auth')
 const bodyParser = require('body-parser');
 const homes = require('./routes/homes')
+const reservations = require('./routes/reservations')
 const morgan = require ('morgan')
 
 
@@ -17,6 +18,7 @@ app.use(auth);
 
 app.use('/users', users);
 app.use('/homes', homes);
+app.use('/reservations',reservations);
 
 app.get('/', (_req,res) => {
     res.send('Backend airbnb');
@@ -25,3 +27,5 @@ app.get('/', (_req,res) => {
 app.listen(PORT, () => {
     console.log('Estoy corriendo en el puerto', PORT);
 })
+
+module.exports = app;

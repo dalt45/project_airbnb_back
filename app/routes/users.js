@@ -92,7 +92,7 @@ router.post('/login',(req,res) => {
                 res.status(200).json({token});
                 //userParams trae la contraseña en texto plano
             }else{            
-            res.status(400).json({error:"El email o la contraseña son incorrectos});
+            res.status(400).json({error:"El email o la contraseña son incorrectos"});
             }
         })
     } )
