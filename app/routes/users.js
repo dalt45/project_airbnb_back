@@ -90,6 +90,7 @@ router.post('/login',(req,res) => {
         email:userParams.email
     }, (error,user)=> {
         if(error) return res.status(404).json({error});
+        if(user === null) return res.status(401).json({error:"Usuario no existe"});
         bcrypt.compare(userParams.password, user.password, (err,response) => {
             if (response) {
                 const token = jwt.sign(user.toJSON(), 'devfrules')
